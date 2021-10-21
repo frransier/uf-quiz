@@ -1,10 +1,10 @@
 import { AnimatePresence } from "framer-motion";
-import Card from "../components/card";
+import Expanded from "../components/expanded";
 
 export default function Home() {
   return (
     <AnimatePresence>
-      <Card id="shared" key="shared" />
+      <Expanded id="shared" key="shared" />
     </AnimatePresence>
   );
 }
