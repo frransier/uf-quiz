@@ -9,11 +9,15 @@ export default function Card() {
     <div style={{ display: "grid", justifyItems: "center", width: 260 }}>
       <div
         style={{
+          display: "flex",
+          alignItems: "center",
           width: 260,
           height: 240,
           margin: "auto",
           marginTop: 40,
+          borderRadius: 4,
           boxShadow: "2px 4px 8px darkgrey",
+          overflow: "hidden"
         }}
       >
         <motion.img

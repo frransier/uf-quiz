@@ -4,8 +4,8 @@ export default {
   comments: 8,
   img: {
     src: "tokyo.jpg",
-    width: 670,
-    height: 720,
+    width: 1000,
+    height: 1500,
   },
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.",
 };
