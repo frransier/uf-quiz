@@ -3,11 +3,9 @@ import "../styles/styles.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className="container">
-      <AnimateSharedLayout type="crossfade">
-        <Component {...pageProps} />
-      </AnimateSharedLayout>
-    </div>
+    <AnimateSharedLayout>
+      <Component {...pageProps} />
+    </AnimateSharedLayout>
   );
 }
 
