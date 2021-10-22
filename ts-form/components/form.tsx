@@ -47,14 +47,7 @@ class ProfileForm extends Component<Props, State> {
     errors: null,
   };
 
-  componentDidUpdate() {
-    console.log(this.state);
-
-  }
-
   onInputChange = (name: string, value: string | boolean): void => {
-    console.log(name, value);
-
     this.setState((previous) => ({
       ...previous,
       [name]: value
@@ -71,8 +64,6 @@ class ProfileForm extends Component<Props, State> {
 
   render() {
     const { firstName, lastName, phoneNumber, receiveNewsletter, errors } = this.state
-
-
 
     return (
       <form onSubmit={this.onSubmit} style={{ display: "grid", gridTemplateColumns: "1fr" }}>
