@@ -3,24 +3,31 @@ import useFullSize from "../lib/useFullSize";
 import props from "../lib/props";
 import Details from "./details";
 import Close from "./close";
+import { useRouter } from 'next/router';
+import Expand from './expand';
 
 export default function FullScreen() {
-  const { img } = props;
+  const router = useRouter()
+  const { title, text, img } = props;
   const fullSize = useFullSize(img);
+  // console.log(fullSize);
+
   return (
-    <div
+    // <div>
+    <motion.div
+      onClick={() => router.push("/")}
+      layoutId="container"
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        overflow: "hidden",
         width: "100vw",
         height: "100vh",
-        overflow: "hidden",
-        borderRadius: 0,
-      }}
-    >
-      <Close />
+        marginTop: 0
 
+      }}
+      transition={{ type: "spring", duration: 0.4 }}
+    >
       <motion.img
         layoutId="image"
         width={img.width}
@@ -28,15 +35,16 @@ export default function FullScreen() {
         style={{
           width: fullSize.width,
           height: fullSize.height,
-          borderRadius: 0,
-          zIndex: -1,
+          borderRadius: 4
         }}
-        transition={{ type: "spring", duration: 0.8, bounce: 0.4 }}
         src={img.src}
-        alt=""
+        alt="tokyo"
+        transition={{ type: "spring", duration: 0.4 }}
       />
 
+      <Close />
       <Details />
-    </div>
+    </motion.div>
+    // </div>
   );
 }

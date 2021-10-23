@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function useFullSize(img) {
-  const [fullSize, setFullSize] = useState({
-    width: undefined,
-    height: undefined,
-  });
-  useEffect(() => {
-    const w = { width: window.innerWidth, height: window.innerHeight };
-    const ratio = img.height / img.width;
-    const fz =
-      w.width > w.height
-        ? { width: w.width, height: w.width * ratio }
-        : { height: w.height, width: w.height / ratio };
+  const [fullSize, setFullSize] = useState(img)
+  const ratio = img.height / img.width;
 
-    setFullSize({
-      width: fz.width,
-      height: fz.height,
-    });
-  }, []);
-  return fullSize;
+  useEffect(() => {
+    setFullSize(
+      window.innerWidth > window.innerHeight
+        ? { width: window.innerWidth, height: window.innerWidth * ratio }
+        : { height: window.innerHeight, width: window.innerHeight / ratio })
+  }, [])
+
+  return fullSize
+
+
 }

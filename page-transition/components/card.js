@@ -1,34 +1,43 @@
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import props from "../lib/props";
 import Expand from "./expand";
+import { useRouter } from 'next/router';
 
 export default function Card() {
+  const router = useRouter()
   const { title, img, text } = props;
   return (
-    <div style={{ display: "grid", justifyItems: "center", width: 260 }}>
-      <div
+    // <div>
+    <div style={{ display: "grid", justifyItems: "center", width: 270 }}>
+      <motion.div
+        onClick={() => router.push("/full-screen")}
+        layoutId="container"
         style={{
           display: "flex",
           alignItems: "center",
           width: 260,
           height: 240,
-          margin: "auto",
-          marginTop: 40,
+          overflow: "hidden",
+          marginTop: 50,
           borderRadius: 4,
-          boxShadow: "2px 4px 8px darkgrey",
-          overflow: "hidden"
+          boxShadow: "4px 8px 16px darkgrey"
         }}
       >
         <motion.img
           layoutId="image"
           width="100%"
-          style={{ borderRadius: 4 }}
+          style={{
+            borderRadius: 4
+          }}
           src={img.src}
           alt="tokyo"
         />
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
         style={{
           display: "grid",
           justifyItems: "center",
@@ -37,7 +46,9 @@ export default function Card() {
         <h1 style={{ marginBottom: 0 }}>{title}</h1>
         <p>{text}</p>
         <Expand />
-      </div>
-    </div>
+      </motion.div>
+    </div >
+    // </div>
+    // </div>
   );
 }
