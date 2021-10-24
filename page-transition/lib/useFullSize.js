@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-
 export default function useFullSize(img) {
   const ratio = img.height / img.width;
   if (typeof document !== "undefined") {
@@ -12,15 +9,3 @@ export default function useFullSize(img) {
   }
   else return { ...img, clientWidth: img.width, clientHeight: img.height }
 }
-// export default function useFullSize(img) {
-//   const [fullSize, setFullSize] = useState(img)
-//   const ratio = img.height / img.width;
-//   useEffect(() => {
-//     const { clientWidth, clientHeight } = document.documentElement
-//     const img = clientWidth > clientHeight
-//       ? { width: clientWidth, height: clientWidth * ratio }
-//       : { height: clientHeight, width: clientHeight / ratio }
-//     setFullSize({ ...img, client: { clientWidth, clientHeight } })
-//   }, [])
-//   return fullSize
-// }
