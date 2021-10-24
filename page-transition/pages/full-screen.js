@@ -8,8 +8,6 @@ export default function FullScreen() {
   const { img } = props;
   const fullSize = useFullSize(img);
 
-
-
   return (
     <motion.div
       layoutId="container"

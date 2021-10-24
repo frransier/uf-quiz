@@ -6,7 +6,6 @@ export default function useFullSize(img) {
     function handleResize() {
       const d = createDimensions(img)
       setFullSize(d)
-      console.log("handleResize", fullSize);
     }
     window.addEventListener("resize", handleResize)
     handleResize()
