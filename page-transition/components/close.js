@@ -6,7 +6,7 @@ export default function Close() {
     <Link href="/">
       <span
         style={{
-          position: "absolute",
+          position: "fixed",
           color: "white",
           top: 0,
           left: 0,
@@ -14,7 +14,6 @@ export default function Close() {
           fontSize: 28,
           opacity: 0.9,
         }}
-      // onClick={() => router.back()}
       >
         <MdClose />
       </span>

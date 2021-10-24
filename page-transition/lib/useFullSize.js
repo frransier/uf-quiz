@@ -2,14 +2,25 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function useFullSize(img) {
-  const [fullSize, setFullSize] = useState(img)
   const ratio = img.height / img.width;
-  useEffect(() => {
+  if (typeof document !== "undefined") {
     const { clientWidth, clientHeight } = document.documentElement
-    setFullSize(
-      clientWidth > clientHeight
-        ? { width: clientWidth, height: clientWidth * ratio }
-        : { height: clientHeight, width: clientHeight / ratio })
-  }, [])
-  return fullSize
+    const img = clientWidth > clientHeight
+      ? { width: clientWidth, height: clientWidth * ratio }
+      : { height: clientHeight, width: clientHeight / ratio }
+    return { ...img, clientWidth, clientHeight }
+  }
+  else return { ...img, clientWidth: img.width, clientHeight: img.height }
 }
+// export default function useFullSize(img) {
+//   const [fullSize, setFullSize] = useState(img)
+//   const ratio = img.height / img.width;
+//   useEffect(() => {
+//     const { clientWidth, clientHeight } = document.documentElement
+//     const img = clientWidth > clientHeight
+//       ? { width: clientWidth, height: clientWidth * ratio }
+//       : { height: clientHeight, width: clientHeight / ratio }
+//     setFullSize({ ...img, client: { clientWidth, clientHeight } })
+//   }, [])
+//   return fullSize
+// }

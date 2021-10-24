@@ -8,18 +8,17 @@ export default function FullScreen() {
   const { img } = props;
   const fullSize = useFullSize(img);
 
+
+
   return (
     <motion.div
       layoutId="container"
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
-        width: "100vw",
-        height: "100vh",
+        width: fullSize.clientWidth,
+        height: fullSize.clientHeight,
         marginTop: 0,
       }}
       transition={{ type: "spring", duration: 0.4 }}
@@ -37,7 +36,7 @@ export default function FullScreen() {
         alt="tokyo"
         transition={{ type: "spring", duration: 0.4 }}
       />
-      {/* <Close /> */}
+      <Close />
       <Details />
     </motion.div>
   );
