@@ -37,7 +37,7 @@ export default function FullScreen() {
         alt="tokyo"
         transition={{ type: "spring", duration: 0.4 }}
       />
-      <Close />
+      {/* <Close /> */}
       <Details />
     </motion.div>
   );
