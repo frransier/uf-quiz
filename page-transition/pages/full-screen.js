@@ -16,9 +16,10 @@ export default function FullScreen() {
       style={{
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
         overflow: "hidden",
-        width: fullSize.clientWidth,
-        height: fullSize.clientHeight,
+        width: fullSize.innerWidth,
+        height: fullSize.innerHeight,
         marginTop: 0,
       }}
       transition={{ type: "spring", duration: 0.4 }}
