@@ -11,6 +11,7 @@ export default function Content() {
     style={{
       display: "grid",
       justifyItems: "center",
+      width: 260
     }}
   >
     <h1 style={{ marginBottom: 0 }}>{title}</h1>

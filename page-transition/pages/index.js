@@ -5,7 +5,7 @@ import props from "../lib/props";
 export default function Home() {
   const { img } = props;
   return (
-    <div style={{ display: "grid", justifyItems: "center", width: 270 }}>
+    <>
       <motion.div
         layoutId="container"
         style={{
@@ -14,6 +14,7 @@ export default function Home() {
           width: 260,
           height: 240,
           overflow: "hidden",
+          margin: "0 auto",
           marginTop: 50,
           borderRadius: 4,
           boxShadow: "4px 8px 16px darkgrey"
@@ -30,6 +31,6 @@ export default function Home() {
         />
       </motion.div>
       <Content />
-    </div >
+    </>
   );
 }

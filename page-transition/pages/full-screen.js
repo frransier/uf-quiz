@@ -12,6 +12,9 @@ export default function FullScreen() {
     <motion.div
       layoutId="container"
       style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
@@ -34,7 +37,6 @@ export default function FullScreen() {
         alt="tokyo"
         transition={{ type: "spring", duration: 0.4 }}
       />
-
       <Close />
       <Details />
     </motion.div>
