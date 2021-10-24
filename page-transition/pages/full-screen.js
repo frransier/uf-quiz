@@ -12,7 +12,7 @@ export default function FullScreen() {
     <motion.div
       layoutId="container"
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
         display: "flex",
