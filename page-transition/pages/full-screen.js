@@ -9,34 +9,36 @@ export default function FullScreen() {
   const fullSize = useFullSize(img);
 
   return (
-    <motion.div
-      layoutId="container"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        width: fullSize.innerWidth,
-        height: fullSize.innerHeight,
-        marginTop: 0,
-      }}
-      transition={{ type: "spring", duration: 0.4 }}
-    >
-      <motion.img
-        layoutId="image"
-        width={img.width}
-        height={img.height}
+    <>
+      <motion.div
+        layoutId="container"
         style={{
-          width: fullSize.width,
-          height: fullSize.height,
-          borderRadius: 0
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          width: fullSize.innerWidth,
+          height: fullSize.innerHeight,
+          marginTop: 0,
         }}
-        src={img.src}
-        alt="tokyo"
         transition={{ type: "spring", duration: 0.4 }}
-      />
+      >
+        <motion.img
+          layoutId="image"
+          width={img.width}
+          height={img.height}
+          style={{
+            width: fullSize.width,
+            height: fullSize.height,
+            borderRadius: 0,
+          }}
+          src={img.src}
+          alt="tokyo"
+          transition={{ type: "spring", duration: 0.4 }}
+        />
+      </motion.div>
       <Close />
       <Details />
-    </motion.div>
+    </>
   );
 }
