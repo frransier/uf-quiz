@@ -1,11 +1,6 @@
-type Props = {
-  onChange: (name: string, value: string) => void;
-  type: string,
-  name: string,
-  value: string,
-  errors: Array<{ path: string, message: string }> | null,
-};
-function TextInput({ onChange, errors, ...props }: Props) {
+import { TextInputProps } from "../types";
+
+function TextInput({ onChange, errors, ...props }: TextInputProps) {
   const error = errors && errors.find((e) => e.path === props.name)
 
   return (
