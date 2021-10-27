@@ -1,65 +1,60 @@
-import { State, Props } from "../types";
-import React, { Component } from 'react'
-import TextInput from './textInput';
-import CheckBoxInput from './checkBoxInput';
+import { FormEvent, useState } from 'react'
+import useInput from '../lib/useInput';
+import fetch from '../lib/fetch';
+import Input from './input';
+import Checkbox from './checkbox';
+import { Profile } from '../types';
 
-// "Server-side" code
-const mockPost = (profile: State): Promise<any> => new Promise(resolve => {
-  const errors = []
+export default function Form() {
+  const [firstName, setFirstName, resetFirstName, firstNameError] = useInput("name")
+  const [lastName, setLastName, resetLastName, lastNameError] = useInput("name")
+  const [phoneNumber, setPhoneNumber, resetPhoneNumber, phoneNumberError] = useInput("phone")
+  const [newsletter, setNewsletter] = useState(false)
+  const [response, setResponse] = useState("")
 
-  if (!profile.firstName) errors.push({ path: 'firstName', message: 'Missing first name!' })
-  if (!profile.lastName) errors.push({ path: 'lastName', message: 'Missing last name!' })
-  if (!profile.phoneNumber) {
-    errors.push({ path: 'phoneNumber', message: 'Missing phone number!' })
-  } else if (profile.phoneNumber.replace(/[^0-9]/, '').length !== 8) {
-    errors.push({ path: 'phoneNumber', message: 'Phone number must be 8 digits' })
+  async function onSubmit(e: FormEvent): Promise<void> {
+    e.preventDefault()
+    const profile = { firstName: firstName, lastName, phoneNumber }
+    const submission = JSON.stringify({ profile, newsletter })
+    await fetch("/api/form", submission).then(res => {
+      if (res.valid) {
+        resetAll()
+        setResponse("Thanks for signing up!")
+      }
+      if (!res.valid) {
+        setAll(res.profile)
+        setResponse("Please fill out the required fields")
+      }
+    }).catch(e => {
+      const err = e.message
+      console.error(err)
+      setResponse(err)
+    })
+  }
+  function resetAll() {
+    resetFirstName()
+    resetLastName()
+    resetPhoneNumber()
+    setNewsletter(false)
+  }
+  function setAll(profile: Profile) {
+    setFirstName(profile.firstName)
+    setLastName(profile.lastName)
+    setPhoneNumber(profile.phoneNumber)
   }
 
-  if (errors.length > 0) {
-    resolve({ errors })
-  }
-  else {
-    resolve({ profile })
-  }
-})
-
-class ProfileForm extends Component<Props, State> {
-  state = {
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    receiveNewsletter: false,
-    errors: null,
-  };
-  onInputChange = (name: string, value: string | boolean): void => {
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: value
-    }))
-  };
-
-  onSubmit = async (event: React.FormEvent): Promise<void> => {
-    event.preventDefault()
-    this.setState({ errors: null })
-    const response = await mockPost(this.state)
-    this.setState(response)
-  };
-
-
-  render() {
-    const { firstName, lastName, phoneNumber, receiveNewsletter, errors } = this.state
-
-    return (
-      <form onSubmit={this.onSubmit} style={{ display: "grid", gridTemplateColumns: "1fr" }}>
-        <label> First name: <TextInput errors={errors} type="text" name="firstName" aria-label="First Name" value={firstName} onChange={this.onInputChange} /></label>
-        <label> Last name: <TextInput errors={errors} type="text" name="lastName" aria-label="Last Name" value={lastName} onChange={this.onInputChange} /> </label>
-        <label> Phone number: <TextInput errors={errors} type="tel" name="phoneNumber" aria-label="Phone Number" value={phoneNumber} onChange={this.onInputChange} /> </label>
-        <label> Receive newsletter ? <CheckBoxInput type="checkbox" name="receiveNewsletter" aria-label="Receive Newsletter" checked={receiveNewsletter} onChange={this.onInputChange} /> </label>
-        <button type="submit" > Save changes </button>
+  return (
+    <div style={{ width: 360, margin: "0 auto" }}>
+      <form onSubmit={onSubmit} style={{ display: "grid" }}>
+        <Input label="First Name" value={firstName} onChange={setFirstName} error={firstNameError} />
+        <Input label="Last Name" value={lastName} onChange={setLastName} error={lastNameError} />
+        <Input label="Phone Number" value={phoneNumber} onChange={setPhoneNumber} error={phoneNumberError} />
+        <Checkbox label="Receive Newsletter" checked={newsletter} onChange={setNewsletter} />
+        <button style={{ margin: 4 }} type="submit"> Save changes </button>
       </form>
-    )
-  }
+      {response && <div style={{ margin: 4 }}>{response}</div>}
+    </div>
+  )
 }
 
-export default ProfileForm
 
