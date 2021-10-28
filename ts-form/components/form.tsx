@@ -15,8 +15,9 @@ export default function Form() {
   async function onSubmit(e: FormEvent): Promise<void> {
     e.preventDefault()
     const profile = { firstName: firstName, lastName, phoneNumber }
-    const submission = JSON.stringify({ profile, newsletter })
-    await fetch("/api/form", submission).then(res => {
+    const body = JSON.stringify({ profile, newsletter })
+    await fetch("/api/form", body)
+    .then(res => {
       if (res.valid) {
         resetAll()
         setResponse("Thanks for signing up!")
@@ -26,9 +27,8 @@ export default function Form() {
         setResponse("Please fill out the required fields")
       }
     }).catch(e => {
-      const err = e.message
-      console.error(err)
-      setResponse(err)
+      console.error(e.log)
+      setResponse(e.message)
     })
   }
   function resetAll() {

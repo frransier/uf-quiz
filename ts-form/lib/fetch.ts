@@ -7,7 +7,12 @@ export default async function post(endpoint: string, body: string) {
   if (res.ok) {
     return json
   } else {
-    const err = String(json.error)
-    throw new Error(err)
+    throw Exception(json.message, json.log)
+  }
+}
+
+function Exception(message: string, log: string) {
+  return {
+    message, log
   }
 }

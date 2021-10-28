@@ -1,8 +1,3 @@
-export interface ProfileForm {
-  profile: Profile,
-  newsletter: boolean
-}
-
 export interface Profile {
   firstName: string,
   lastName: string,
