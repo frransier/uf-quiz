@@ -1,4 +1,4 @@
-export default async function post(endpoint: string, body: string) {
+export async function post(endpoint: string, body: string) {
   const res = await fetch(endpoint, {
     method: "post",
     body,
@@ -7,12 +7,6 @@ export default async function post(endpoint: string, body: string) {
   if (res.ok) {
     return json
   } else {
-    throw Exception(json.message, json.log)
-  }
-}
-
-function Exception(message: string, log: string) {
-  return {
-    message, log
+    throw { message: json.message, log: json.log }
   }
 }

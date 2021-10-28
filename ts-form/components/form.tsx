@@ -1,9 +1,9 @@
+import { Profile } from '../types';
 import { FormEvent, useState } from 'react'
+import { post } from '../lib/fetch';
 import useInput from '../lib/useInput';
-import fetch from '../lib/fetch';
 import Input from './input';
 import Checkbox from './checkbox';
-import { Profile } from '../types';
 
 export default function Form() {
   const [firstName, setFirstName, resetFirstName, firstNameError] = useInput("name")
@@ -14,22 +14,21 @@ export default function Form() {
 
   async function onSubmit(e: FormEvent): Promise<void> {
     e.preventDefault()
-    const profile = { firstName: firstName, lastName, phoneNumber }
-    const body = JSON.stringify({ profile, newsletter })
-    await fetch("/api/form", body)
-    .then(res => {
-      if (res.valid) {
-        resetAll()
-        setResponse("Thanks for signing up!")
-      }
-      if (!res.valid) {
-        setAll(res.profile)
-        setResponse("Please fill out the required fields")
-      }
-    }).catch(e => {
-      console.error(e.log)
-      setResponse(e.message)
-    })
+    const body = JSON.stringify({ firstName, lastName, phoneNumber, newsletter })
+    await post("/api/submit", body)
+      .then(res => {
+        if (res.valid) {
+          resetAll()
+          setResponse("Thanks for signing up!")
+        }
+        if (!res.valid) {
+          setAll(res.profile)
+          setResponse("Please fill out the required fields")
+        }
+      }).catch(e => {
+        console.error(e.log)
+        setResponse(e.message)
+      })
   }
   function resetAll() {
     resetFirstName()
@@ -38,9 +37,10 @@ export default function Form() {
     setNewsletter(false)
   }
   function setAll(profile: Profile) {
-    setFirstName(profile.firstName)
-    setLastName(profile.lastName)
-    setPhoneNumber(profile.phoneNumber)
+    const { firstName, lastName, phoneNumber } = profile
+    setFirstName(firstName)
+    setLastName(lastName)
+    setPhoneNumber(phoneNumber)
   }
 
   return (
@@ -52,7 +52,7 @@ export default function Form() {
         <Checkbox label="Receive Newsletter" checked={newsletter} onChange={setNewsletter} />
         <button style={{ margin: 4 }} type="submit"> Save changes </button>
       </form>
-      {response && <div style={{ margin: 4 }}>{response}</div>}
+      <div style={{ margin: 4 }}>{response}</div>
     </div>
   )
 }
