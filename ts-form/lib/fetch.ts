@@ -7,6 +7,6 @@ export async function post(endpoint: string, body: string) {
   if (res.ok) {
     return json
   } else {
-    throw { message: json.message, log: json.log }
+    throw { status: res.status }
   }
 }

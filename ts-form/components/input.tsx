@@ -1,7 +1,6 @@
 import { InputProps } from "../types";
 
-export default function Input({ label, value, onChange, error }: InputProps) {
-
+export default function Input({ label, inputKey, value, onChange, error }: InputProps) {
   return (
     <label style={{ display: "grid", margin: 4 }} aria-label={label}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -10,8 +9,8 @@ export default function Input({ label, value, onChange, error }: InputProps) {
       </div>
       <input
         type="text"
-        onChange={event => onChange(event.target.value)}
-        onBlur={event => onChange(event.target.value)}
+        onChange={event => onChange(inputKey, event.target.value)}
+        onBlur={event => onChange(inputKey, event.target.value)}
         value={value}
       />
     </label>

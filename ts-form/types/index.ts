@@ -1,9 +1,3 @@
-export interface Profile {
-  firstName: string,
-  lastName: string,
-  phoneNumber: string
-}
-
 export interface IForm {
   endpoint: string,
   fields: FormField[]
@@ -12,6 +6,7 @@ export interface IForm {
 export interface FormField {
   key: string,
   label: string,
+  initialValue?: string | boolean,
   type: string,
   validation?: Validation
 }
@@ -23,13 +18,10 @@ export enum Validation {
 }
 
 export interface InputProps {
-  onChange: (target: string) => void;
-  value: string,
+  onChange: (key: string, value: string | boolean) => void;
+  inputKey: string,
+  value?: string,
   label: string,
+  checked?: boolean,
   error?: string
-}
-export interface CheckboxProps {
-  onChange: (checked: boolean) => void;
-  checked: boolean,
-  label: string,
 }

@@ -1,11 +1,13 @@
 import { SetStateAction } from "react"
 
-export default function validate(key: string, target: any) {
+export default function validate(key: string, value: any) {
   switch (key) {
     case "name":
-      return validateName(target)
+      return validateName(value)
     case "phone":
-      return validatePhone(target)
+      return validatePhone(value)
+    case "none":
+      return null
     default:
       console.error(`Unknown validation key: ${key}`)
       return "Something is wrong. Contact support"
