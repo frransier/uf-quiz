@@ -28,8 +28,9 @@ export default function FullScreen() {
           width={img.width}
           height={img.height}
           style={{
-            width: fullSize.width,
-            height: fullSize.height,
+            // width: fullSize.width,
+            // height: fullSize.height,
+            objectFit: "cover",
             borderRadius: 0,
           }}
           src={img.src}

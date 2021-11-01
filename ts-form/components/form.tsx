@@ -1,9 +1,10 @@
-import { Profile } from '../types';
+import { Profile, Validation } from '../types';
 import { FormEvent, useState } from 'react'
 import { post } from '../lib/fetch';
 import useInput from '../lib/useInput';
 import Input from './input';
 import Checkbox from './checkbox';
+import useForm from '../lib/useForm';
 
 export default function Form() {
   const [firstName, setFirstName, resetFirstName, firstNameError] = useInput("name")
