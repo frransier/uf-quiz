@@ -6,9 +6,10 @@ export interface IForm {
 export interface FormField {
   key: string,
   label: string,
-  initialValue?: string | boolean,
+  value?: string | boolean,
   type: string,
   validation?: Validation
+  error?: string | null
 }
 
 export enum Validation {
@@ -22,6 +23,7 @@ export interface InputProps {
   inputKey: string,
   value?: string,
   label: string,
+  type: string,
   checked?: boolean,
   error?: string
 }

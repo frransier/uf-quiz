@@ -5,10 +5,10 @@ const Home: NextPage = () => {
   const form = {
     endpoint: "/api/submit",
     fields: [
-      { key: "firstName", initialValue: "", label: "First Name", type: "text", validation: Validation.Name },
-      { key: "lastName", initialValue: "", label: "Last Name", type: "text", validation: Validation.Name },
-      { key: "phoneNumber", initialValue: "", label: "Phone Number", type: "text", validation: Validation.Phone },
-      { key: "receiveNewsletter", initialValue: false, label: "Receive Newsletter", type: "checkbox", validation: Validation.None }
+      { key: "firstName", value: "", label: "First Name", type: "text", validation: Validation.Name, error: undefined },
+      { key: "lastName", value: "", label: "Last Name", type: "text", validation: Validation.Name, error: undefined },
+      { key: "phoneNumber", value: "", label: "Phone Number", type: "text", validation: Validation.Phone, error: undefined },
+      { key: "receiveNewsletter", value: false, label: "Receive Newsletter", type: "checkbox", validation: Validation.None, error: null }
     ]
   }
   return (

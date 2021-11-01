@@ -1,54 +1,39 @@
-import { IForm, Validation } from "../types";
+import { IForm } from "../types";
 import { FormEvent, useEffect, useState } from 'react';
 import validate from "./validate";
 import { post } from "./fetch";
 
 
-export default function useForm({endpoint, fields}: IForm) {
-  const initialState = fields.map(f =>  ({
-    [f.key]: f.initialValue,
-    error: undefined,
-    validation: f.validation
-  }))
-  
-  const [state, setState] = useState<any[]>(initialState)
+export default function useForm({ endpoint, fields }: IForm) {
+  const [state, setState] = useState<any[]>(fields)
   const [response, setResponse] = useState("")
   const [hasErrors, setHasErrors] = useState(true)
+
   useEffect(() => {
-    const relevantState = state.filter(x => x.validation !== Validation.None)
-    setHasErrors(!relevantState.every(x => x.error === null) || relevantState.some(x => x.error === undefined))
-  },[state])
+    setHasErrors(!state.every(x => x.error === null) || state.some(x => x.error === undefined))
+  }, [state])
 
   const onChange = (key: string, value: string | boolean): void => {
     setState(prevState => {
-      const field = fields.find(x => x.key === key)
-      if(field) {
-        const filtered = prevState.filter(x => !x.hasOwnProperty(key))
-        const error = field.validation ? validate(field.validation, value) : null 
-        const update = {...prevState.find(x => x.hasOwnProperty(key)), [key]: value, error: error}
-        return [...filtered, update]
-      }
-      else return prevState
+      const field = state.find(x => x.key === key)
+      const update = { ...field, value: value, error: validate(field.validation, value) }
+      return [...prevState.filter(x => x.key !== key), update]
     })
-  }
-  const reset = () => {
-    setState(initialState)
   }
   const onSubmit = async (e: FormEvent) => {
-    e.preventDefault()    
-    await post(endpoint, JSON.stringify(state)).then(() => {
-        reset()
-        setResponse("Thanks for signing up!")
-    }).catch(e => {
-      if(e.status === 400) {
+    e.preventDefault()
+    try {
+      await post(endpoint, JSON.stringify(state))
+      setState(fields)
+      setResponse("Thanks for signing up!")
+    }
+    catch (e: any) {
+      if (e.status === 400)
         setResponse("Please fill out the required fields")
+      else {
+        setResponse("Unknown server error. Contact support")
       }
-      else
-        setResponse("Unkown server error. Contact support")
-    })
-    
-    
-    
+    }
   }
   return { onChange, onSubmit, state, response, hasErrors }
 }

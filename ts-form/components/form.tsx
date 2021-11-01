@@ -5,32 +5,24 @@ import Input from "./input";
 
 export default function Form(form: IForm) {
   const { onChange, onSubmit, state, response, hasErrors } = useForm(form)
-  
+
   return (
     <form onSubmit={onSubmit}>
       {form.fields.map(field => {
-        var f;
-        switch (field.type) {          
-        case "text":
-          f = state.find(x => x.hasOwnProperty(field.key))
-          return <Input 
-                    key={field.label} 
-                    onChange={onChange} 
-                    label={field.label} 
-                    inputKey={field.key} 
-                    value={f[field.key]} 
-                    error={f.error} 
-                  />
-        case "checkbox":
-          f = state.find(x => x.hasOwnProperty(field.key))
-          return <Checkbox 
-                  key={field.label}
-                  inputKey={field.key} 
-                  onChange={onChange}
-                  label={field.label}
-                  checked={f[field.key]}
-                />
-      }
+        const f = state.find(x => x.key === field.key)
+        const sharedProps = {
+          key: f.label,
+          label: f.label,
+          onChange: onChange,
+          inputKey: f.key,
+          type: f.type
+        }
+        switch (field.type) {
+          case "text":
+            return <Input {...sharedProps} value={f.value} error={f.error} />
+          case "checkbox":
+            return <Checkbox {...sharedProps} checked={f.value} />
+        }
       })}
       <button disabled={hasErrors} type="submit">Submit</button>
       <div>{response}</div>
